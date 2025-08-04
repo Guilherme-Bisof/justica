@@ -3,20 +3,20 @@ require_once __DIR__ . '/../includes/conexao.php';
 require_once __DIR__ . '/../includes/auth.php';
 permitir(['admin', 'recepcao_agenda', 'psicologa']);
 
-// Consulta para buscar os eventos
-$sql = "SELECT id, nome_completo, data_agendamento, hora_agendamento, psicologa, prioridade, observacoes, status 
-        FROM agendamentos_escuta";
+// Consultar eventos no banco de dados
+$sql = "SELECT * FROM agendamentos_escuta";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 
-$events = [];
+$eventos = [];
 while ($row = $result->fetch_assoc()) {
-    $events[] = [
+    $eventos[] = [
         'id' => $row['id'],
-        'title' => $row['nome_completo'],
+        'title' => $row['nome_completo'] . " - " . $row['hora_agendamento'],
         'start' => $row['data_agendamento'] . 'T' . $row['hora_agendamento'],
         'extendedProps' => [
+            'id' => $row['id'],
             'nome_completo' => $row['nome_completo'],
             'data_agendamento' => $row['data_agendamento'],
             'hora_agendamento' => $row['hora_agendamento'],
@@ -29,5 +29,5 @@ while ($row = $result->fetch_assoc()) {
 }
 
 header('Content-Type: application/json');
-echo json_encode($events);
+echo json_encode($eventos, JSON_UNESCAPED_UNICODE);
 ?>

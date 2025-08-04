@@ -55,6 +55,14 @@ if (isset($_GET['pedido_id'])) {
             padding: 25px 0;
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .btn-back {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            z-index: 10;
         }
         
         #calendar {
@@ -117,22 +125,33 @@ if (isset($_GET['pedido_id'])) {
             border-radius: 20px;
             font-weight: 500;
         }
+        
+        @media (max-width: 768px) {
+            .btn-back {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header text-center">
-        <div class="container">
+        <div class="container position-relative">
+            <!-- Botão Voltar ao Painel -->
+            <a href="../painel.php" class="btn btn-outline-light btn-back">
+                <i class="fas fa-arrow-left me-1"></i> Voltar ao Painel
+            </a>
+            
             <h1><i class="fas fa-calendar-check me-3"></i> Agenda de Escutas</h1>
             <p class="lead">Controle de agendamentos para atendimentos psicológicos</p>
         </div>
     </div>
 
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="mb-4">
             <h2><i class="far fa-calendar-alt me-2"></i> Calendário de Agendamentos</h2>
-            <a href="../painel.php" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-1"></i> Voltar ao Painel
-            </a>
         </div>
         
         <!-- Área de debug -->
@@ -403,6 +422,22 @@ if (isset($_GET['pedido_id'])) {
 
             calendar.render();
             showDebug('Calendário renderizado!');
+
+            // Preencher com dados do pedido, se existir (MOVENDO PARA FORA DO EVENT LISTENER)
+            <?php if(isset($pedido)): ?>
+                // Preenche os campos do formulário
+                document.getElementById('novoNome').value = <?= json_encode($pedido['nome_completo']) ?>;
+                document.getElementById('novaPrioridade').value = <?= json_encode($pedido['prioridade']) ?>;
+                
+                const obs = <?= json_encode($pedido['observacoes']) ?>;
+                if (obs) {
+                    document.getElementById('novaObservacoes').value = obs;
+                }
+                
+                // Abre o modal automaticamente
+                const modal = new bootstrap.Modal(document.getElementById('novoEventoModal'));
+                modal.show();
+            <?php endif; ?>
             
             // Formulário para novo evento
             document.getElementById('formNovoEvento').addEventListener('submit', function(e) {
@@ -428,17 +463,26 @@ if (isset($_GET['pedido_id'])) {
                 // Envia via AJAX
                 axios.post('../agenda/agenda.php?action=create', formData)
                     .then(response => {
-                        showDebug('Agendamento criado com sucesso!');
-                        
-                        // Fechar modal
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('novoEventoModal'));
-                        modal.hide();
-                        
-                        // Recarregar eventos
-                        calendar.refetchEvents();
-                        
-                        // Limpar formulário
-                        document.getElementById('formNovoEvento').reset();
+                        if (response.data.id) {
+                            showDebug('Agendamento criado com sucesso!');
+                            
+                            // Adicionar o novo evento ao calendário
+                            calendar.addEvent({
+                                id: response.data.id,
+                                title: response.data.title,
+                                start: response.data.start,
+                                extendedProps: response.data.extendedProps
+                            });
+                            
+                            // Fechar modal
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('novoEventoModal'));
+                            modal.hide();
+                            
+                            // Limpar formulário
+                            document.getElementById('formNovoEvento').reset();
+                        } else {
+                            showDebug('Erro ao criar agendamento: ' + (response.data.error || 'Resposta inválida do servidor'));
+                        }
                     })
                     .catch(error => {
                         showDebug('Erro ao criar agendamento: ' + error.message);
@@ -466,22 +510,6 @@ if (isset($_GET['pedido_id'])) {
                     showDebug('Nenhum evento selecionado para exclusão')
                 }
             });
-            
-            // Preencher com dados do pedido, se existir
-            <?php if($pedido): ?>
-                document.addEventListener('DOMContentLoaded', function() {
-                    document.getElementById('novoNome').value = <?= json_encode($pedido['nome_completo']) ?>;
-                    document.getElementById('novaPrioridade').value = <?= json_encode($pedido['prioridade']) ?>;
-                    
-                    const obs = <?= json_encode($pedido['observacoes']) ?>;
-                    if (obs) {
-                        document.getElementById('novaObservacoes').value = obs;
-                    }
-                    
-                    const modal = new bootstrap.Modal(document.getElementById('novoEventoModal'));
-                    modal.show();
-                });
-            <?php endif; ?>
         });
     </script>
 </body>

@@ -175,6 +175,13 @@ if ($result) {
             color: white;
         }
         
+        .btn-back {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            z-index: 10;
+        }
+        
         .btn-action {
             width: 36px;
             height: 36px;
@@ -266,12 +273,24 @@ if ($result) {
             .table {
                 min-width: 800px;
             }
+            
+            .btn-back {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 15px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header text-center">
-        <div class="container">
+        <div class="container position-relative">
+            <!-- Botão Voltar ao Painel -->
+            <a href="../../painel.php" class="btn btn-outline-light btn-back">
+                <i class="fas fa-arrow-left me-1"></i> Voltar ao Painel
+            </a>
+            
             <h1 class="page-title"><i class="fas fa-headphones me-2"></i>Pedidos de Escuta</h1>
             <p class="page-description">Controle e gerenciamento de solicitações de escuta</p>
         </div>
@@ -331,9 +350,9 @@ if ($result) {
                                     <div class="d-flex gap-2">
                                         <?php if ($pedido['status'] === 'Pendente'): ?>
                                             <a href="../../agenda/index.php?pedido_id=<?= $pedido['id'] ?>" 
-                                               class="btn btn-success btn-action text-white" 
-                                               title="Agendar">
-                                               <i class="fas fa-calendar-check"></i>
+                                            class="btn btn-success btn-action text-white" 
+                                            title="Agendar">
+                                            <i class="fas fa-calendar-check"></i>
                                             </a>
                                         <?php endif; ?>
                                         
