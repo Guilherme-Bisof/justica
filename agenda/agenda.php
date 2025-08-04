@@ -1,40 +1,51 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-include '../conexao.php';
 
-$sql = "SELECT id, nome_completo, data_agendamento, hora_agendamento, prioridade, psicologa, status 
-        FROM pedidos_escuta";
-$result = $conn->query($sql);
-
+// Sempre retorna dados de exemplo primeiro para testar
 $eventos = [
     [
-        'id'    => 1,
-        'title' => 'Maria Silva - Psicóloga Ana',
+        'id' => 1,
+        'title' => "Mayara Santos\n14:00 Psic. Aline",
         'start' => '2025-08-05T14:00:00',
         'extendedProps' => [
             'id' => 1,
-            'nome_completo' => 'Maria Silva',
+            'nome_completo' => 'Mayara Santos',
             'data_agendamento' => '2025-08-05',
             'hora_agendamento' => '14:00',
-            'psicologa' => 'Ana',
+            'psicologa' => 'Psic. Aline',
             'prioridade' => 'Alta',
             'status' => 'Agendado'
         ]
     ],
     [
-        'id'    => 2,
-        'title' => 'João Santos - Psicóloga Carla',
-        'start' => '2025-08-07T09:30:00',
+        'id' => 2,
+        'title' => "Felipe Oliveira\n09:30 Psic. Hugo",
+        'start' => '2025-08-12T09:30:00',
         'extendedProps' => [
             'id' => 2,
-            'nome_completo' => 'João Santos',
-            'data_agendamento' => '2025-08-07',
+            'nome_completo' => 'Felipe Oliveira',
+            'data_agendamento' => '2025-08-12',
             'hora_agendamento' => '09:30',
-            'psicologa' => 'Carla',
+            'psicologa' => 'Psic. Hugo',
             'prioridade' => 'Média',
             'status' => 'Confirmado'
+        ]
+    ],
+    [
+        'id' => 3,
+        'title' => "Sérgio Almeida\n11:00 Psic. Laura",
+        'start' => '2025-08-19T11:00:00',
+        'extendedProps' => [
+            'id' => 3,
+            'nome_completo' => 'Sérgio Almeida',
+            'data_agendamento' => '2025-08-19',
+            'hora_agendamento' => '11:00',
+            'psicologa' => 'Psic. Laura',
+            'prioridade' => 'Baixa',
+            'status' => 'Agendado'
         ]
     ]
 ];
 
 echo json_encode($eventos, JSON_UNESCAPED_UNICODE);
+?>
