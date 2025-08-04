@@ -1,5 +1,5 @@
 <?php 
-include 'auth.php';
+include './includes/auth.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,12 +22,12 @@ include 'auth.php';
 
             <h3 class="painel-menu-title">Menu Principal</h3>
             <div class="list-group painel-menu">
-                <a href="agenda/agenda_view.php" class="list-group-item list-group-item-action">Agenda de Escutas</a>
-                <a href="escuta/listar.php" class="list-group-item list-group-item-action">Pedidos de Escuta</a>
-                <a href="arquivamentos/listar.php" class="list-group-item list-group-item-action">Arquivamentos</a>
-                <a href="oficios/listar.php" class="list-group-item list-group-item-action">Ofícios</a>
+                <a href="agenda/index.php" class="list-group-item list-group-item-action">Agenda de Escutas</a>
+                <a href="agenda/pedidos_escuta/index.php" class="list-group-item list-group-item-action">Pedidos de Escuta</a>
+                <a href="agenda/arquivos/listar.php" class="list-group-item list-group-item-action">Arquivamentos</a>
+                <a href="agenda/oficios/listar.php" class="list-group-item list-group-item-action">Ofícios</a>
                 <?php if ($_SESSION['usuario_tipo'] === 'admin'): ?>
-                    <a href="usuarios/listar.php" class="list-group-item list-group-item-action">Gerenciar Usuários</a>
+                    <a href="agenda/usuarios/listar.php" class="list-group-item list-group-item-action">Gerenciar Usuários</a>
                 <?php endif; ?>
             </div>
 

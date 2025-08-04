@@ -1,7 +1,7 @@
 <?php
 session_start();
 $erro = "";
-include 'conexao.php';
+require_once __DIR__ . './includes/conexao.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

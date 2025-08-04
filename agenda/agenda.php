@@ -1,4 +1,29 @@
 <?php
+
+require_once __DIR__ . '/../includes/conexao.php';
+require_once __DIR__ . '/../includes/auth.php';
+permitir(['admin', 'recepcao_agenda', 'psicologa']);
+
+$action = $_GET['action'] ?? '';
+
+if ($action === 'delete') {
+    $id = $_POST['id'];
+    
+    $sql = "DELETE FROM agendamentos_escuta WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'error' => $stmt->error]);
+    }
+    exit;
+}
+
+// ... [código para create] ...
+
+
 header('Content-Type: application/json; charset=utf-8');
 
 // Sempre retorna dados de exemplo primeiro para testar
