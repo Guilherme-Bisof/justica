@@ -1,0 +1,57 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Caixa principal */
+.painel-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+}
+
+/* Título */
+.painel-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #0d2b4d;
+}
+
+/* Subtítulo */
+.painel-subtitle {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Título do menu */
+.painel-menu-title {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Links do menu */
+.painel-menu .list-group-item {
+    font-size: 0.95rem;
+    color: #0d2b4d;
+    border: 1px solid #ddd;
+}
+
+.painel-menu .list-group-item:hover {
+    background-color: #f0f6ff;
+}
+
+/* Botão sair */
+.btn-danger {
+    font-weight: bold;
+}
+
+body {
+    background: #f8f9fa;
+    padding: 20px;
+}
+#calendar {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}

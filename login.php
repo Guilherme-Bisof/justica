@@ -1,8 +1,7 @@
 <?php
 session_start();
+$erro = "";
 include 'conexao.php';
-include 'auth.php';
-permitir(['admin', 'recepcao_agenda']);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,10 +26,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: painel.php");
             exit();
         } else {
-            echo "Senha incorreta!";
+            $erro ="Senha incorreta!";
         }
     } else {
-        echo "Usuário não encontrado ou inativo!";
+        $erro = "Usuário não encontrado ou inativo!";
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Justiça Restaurativa</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-light">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card -p4 shadow" style="width: 350px;">
+            <h3 class="text-center mb-3">Acesso ao Sistema</h3>
+
+            <?php if (!empty($erro)): ?>
+                <div class="alert alert-danger"><?php echo $erro; ?></div>
+            <?php endif; ?>
+
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label class="form-label">Usuário</label>
+                    <input type="text" name="usuario" class="form-control" required autofocus>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" name="senha" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
