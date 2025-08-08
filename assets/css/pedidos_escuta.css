@@ -1,0 +1,4 @@
+/* assets/css/pedidos_escuta.css */
+.prioridade-alta { background-color: #ffcccc; border-left: 4px solid #d9534f; }
+.prioridade-media { background-color: #fff8cc; border-left: 4px solid #f0ad4e; }
+.prioridade-baixa { background-color: #dff0d8; border-left: 4px solid #5cb85c; }
