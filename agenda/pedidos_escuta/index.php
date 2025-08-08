@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/conexao.php';
 require_once __DIR__ . '/../../includes/auth.php';
-permitir(['admin', 'recepcao_agenda']);
+permitir(['admin', 'recepcao_agenda', 'psicologa']);
 
 // Consulta pedidos usando MySQLi
 $sql = "SELECT * FROM pedidos_escuta ORDER BY data_entrada DESC";

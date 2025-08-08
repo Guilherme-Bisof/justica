@@ -83,7 +83,7 @@ if (!$arquivamento) {
                                     <select class="form-select" id="psicologa" name="psicologa" required>
                                         <option value="">Selecione...</option>
                                         <?php
-                                        $psicologas = ['Psic. Aline', 'Psic. Hugo', 'Psic. Laura', 'Psic. Carla'];
+                                        $psicologas = ['Psic. Vanessa', 'Psic. Roseneia', 'Psic. Rosemeire'];
                                         foreach ($psicologas as $psico) {
                                             $selected = $psico === $arquivamento['psicologa'] ? 'selected' : '';
                                             echo "<option value='$psico' $selected>$psico</option>";

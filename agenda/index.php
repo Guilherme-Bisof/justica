@@ -207,11 +207,18 @@ if (isset($_GET['pedido_id'])) {
                                         <i class="fas fa-user-md me-1"></i> Psicóloga
                                     </label>
                                     <select class="form-control" id="novaPsicologa" required>
-                                        <option value="">Selecione...</option>
-                                        <option value="Psic. Aline">Psic. Aline</option>
-                                        <option value="Psic. Hugo">Psic. Hugo</option>
-                                        <option value="Psic. Laura">Psic. Laura</option>
-                                        <option value="Psic. Carla">Psic. Carla</option>
+                                        <<?php 
+                                        if ($_SESSION['usuario_tipo'] === 'psicologa') {
+                                            // Exibe apenas a psicóloga logada
+                                            echo '<option value="' . htmlspecialchars($_SESSION['usuario_nome']) . '" selected>' . htmlspecialchars($_SESSION['usuario_nome']) . '</option>';
+                                        } else {
+                                            // Exibe todas as opções
+                                            echo '<option value="">Selecione...</option>';
+                                            echo '<option value="Psic. Vanessa">Psic. Vanessa</option>';
+                                            echo '<option value="Psic. Roseneia">Psic. Roseneia</option>';
+                                            echo '<option value="Psic. Rosemeire">Psic. Rosemeire</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

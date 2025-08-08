@@ -8,13 +8,22 @@ $action = $_GET['action'] ?? '';
 if ($action === 'create') {
     // Receber dados do formulário
     $data = json_decode(file_get_contents('php://input'), true);
+
+    if($_SESSION['usuario_tipo'] === 'psicologa') {
+        $psicologa_id = $_SESSION['usuario_id'];
+        $psicologa_nome = $_SESSION['usuario_nome'];
+    } else {
+        $psicologa_id = $data['psicologa_id'];
+        $psicologa_nome = $data['psicologa'];
+    }
     
     // Inserir no banco de dados
     $sql = "INSERT INTO agendamentos_escuta (
         nome_completo, 
+        psicologa_id,
+        psicologa,
         data_agendamento, 
         hora_agendamento, 
-        psicologa, 
         prioridade, 
         observacoes, 
         status,
@@ -24,8 +33,10 @@ if ($action === 'create') {
     $stmt = $conn->prepare($sql);
     $pedido_id = $data['pedido_id'] ?? null;
     $stmt->bind_param(
-        "sssssssi",
+        "sissssssi",
         $data['nome_completo'],
+        $psicologa_id,
+        $psicologa_nome,
         $data['data_agendamento'],
         $data['hora_agendamento'],
         $data['psicologa'],
@@ -45,9 +56,9 @@ if ($action === 'create') {
             'extendedProps' => [
                 'id' => $id,
                 'nome_completo' => $data['nome_completo'],
+                'psicologa' => $psicologa_nome,
                 'data_agendamento' => $data['data_agendamento'],
                 'hora_agendamento' => $data['hora_agendamento'],
-                'psicologa' => $data['psicologa'],
                 'prioridade' => $data['prioridade'],
                 'observacoes' => $data['observacoes'],
                 'status' => $data['status']
@@ -75,6 +86,5 @@ if ($action === 'delete') {
     exit;
 }
 
-// Se não for create ou delete, retornar eventos
 // ... (código para listar eventos do banco) ...
 ?>

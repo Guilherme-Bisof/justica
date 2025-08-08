@@ -103,12 +103,20 @@ include './includes/auth.php';
             box-shadow: 0 6px 8px rgba(0,0,0,0.15);
             color: white;
         }
+        .logo {
+            height: 150px; /* aumenta o tamanho do logo */
+            vertical-align: middle;
+            margin-right: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="header text-center">
         <div class="container">
-            <h1><i class="fas fa-home me-3"></i> Painel Administrativo</h1>
+           <div class="header-title d-flex justify-content-center align-items-center gap-3 flex-wrap">
+                <h1 class="mb-0">Painel Administrativo</h1>
+                <img src="./assets/img/logo.png" alt="Logo Justiça Restaurativa" class="logo">
+            </div>
             <p class="lead">Sistema de Gestão de Justiça Restaurativa</p>
         </div>
     </div>
@@ -163,17 +171,19 @@ include './includes/auth.php';
                 </a>
             </div>
             
-            <div class="col-md-4">
-                <a href="agenda/oficios/listar.php" class="text-decoration-none">
-                    <div class="card">
-                        <div class="card-body">
-                            <i class="fas fa-file-alt"></i>
-                            <h5 class="card-title">Ofícios</h5>
-                            <p class="text-muted">Gerenciamento de ofícios</p>
+            <?php if ($_SESSION['usuario_tipo'] !== 'psicologa'): ?>
+                <div class="col-md-4">
+                    <a href="agenda/oficios/listar.php" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fas fa-file-alt"></i>
+                                <h5 class="card-title">Ofícios</h5>
+                                <p class="text-muted">Gerenciamento de ofícios</p>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
+                    </a>
+                </div>
+            <?php endif; ?>
             
             <?php if ($_SESSION['usuario_tipo'] === 'admin'): ?>
             <div class="col-md-4">
@@ -187,6 +197,20 @@ include './includes/auth.php';
                     </div>
                 </a>
             </div>
+            <?php endif; ?>
+            
+            <?php if ($_SESSION['usuario_tipo'] === 'admin'): ?>
+                <div class="col-md-4">
+                    <a href="agenda/processos_circulares/index.php" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-body">
+                                <i class="fas fa-circle-nodes"></i>
+                                <h5 class="card-title">Processos Circulares</h5>
+                                <p class="text-muted">Gestão dos círculos restaurativos</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             <?php endif; ?>
         </div>
         
